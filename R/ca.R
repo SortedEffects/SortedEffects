@@ -558,7 +558,7 @@ ca <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
   if (boot_type == "nonpar") {
     # print a message showing how many cores are used
     data$.w <- samp_weight
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     # set up a progress bar
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = stat_boot_CA_weight,
@@ -568,7 +568,7 @@ ca <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
     data$.w <- NULL
   } else if (boot_type == "weighted") {
     data$.w <- samp_weight
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = stat_boot_CA_weight,
                         sim = "parametric", ran.gen = data_rg, mle = 0,
@@ -818,6 +818,15 @@ list_cbind <- function(.data) tempf(.data, "cbind")
 # ----- Summary (Moments of specified variables in interest for least/most
 # affected groups) ------
 #' Return the output of \code{\link{ca}} function.
+#' 
+#' @return A numeric matrix summarizing the classification analysis,
+#'   with rows corresponding to the characteristics analyzed.
+#'   When \code{object$type = "both"}, the columns contain estimates
+#'   for the most and least affected groups and the respective
+#'   standard errors.
+#'   Otherwise, the columns contain estimates, standard errors, and
+#'   joint p-values (JP-vals). When \code{object$type = "diff"}, an
+#'   additional column contains categorical or pointwise p-values.
 #'
 #' @param object   Output of \code{\link{ca}} command with
 #'                 \code{interest = "moments"}.
@@ -883,6 +892,12 @@ summary.ca <- function(object, ...) {
 #'
 #' Plots distributions and joint uniform confidence bands of variables in
 #' interest from \code{\link{ca}} command.
+#'
+#'
+#' @return Draws the estimated distributions and joint uniform confidence
+#'   bands for the most and least affected groups.
+#'   Invisibly returns a list with components \code{rect} and \code{text}
+#'   describing the legend's position and dimensions.
 #'
 #'
 #' @param x           Output of \code{\link{ca}} command with

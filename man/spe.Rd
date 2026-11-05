@@ -95,10 +95,10 @@ implements weighted bootstrap.}
 }
 \value{
 The output is a list with 4 components: (1) \code{spe} stores spe
-estimates, the upper and lower confidence bounds, and standard errors;
-(2) \code{ape} stores ape estimates, the upper and lower confidence bounds,
-and the standard error; (3) \code{us} stores percentile index as in \code{spe} 
-command; (4) \code{alpha} stores significance level as in
+estimates, the upper and lower confidence bounds, and the standard errors;
+(2) \code{ape} stores the ape estimates, the upper and lower confidence bounds,
+and the standard error; (3) \code{us} stores the percentile index as in
+\code{spe} command; (4) \code{alpha} stores the significance level as in
 \code{spe} command.
 }
 \description{

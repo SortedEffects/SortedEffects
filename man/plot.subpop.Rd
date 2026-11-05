@@ -48,6 +48,12 @@ drops the overlapped observations.}
 \item{...}{Graphics parameters to be passed to the plotting
 routines.}
 }
+\value{
+Draws a two-dimensional projection of the confidence sets for
+  the most and least affected groups using the specified variables.
+  Invisibly returns a list with components \code{rect} and \code{text}
+  describing the legend's position and dimensions.
+}
 \description{
 Takes output from \code{\link{subpop}} command as inputs and plots
 2-dimensional projection plots of two specified variables. If a

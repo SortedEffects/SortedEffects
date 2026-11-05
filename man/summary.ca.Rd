@@ -12,6 +12,16 @@
 
 \item{...}{additional arguments affecting the summary produced.}
 }
+\value{
+A numeric matrix summarizing the classification analysis,
+  with rows corresponding to the characteristics analyzed.
+  When \code{object$type = "both"}, the columns contain estimates
+  for the most and least affected groups and the respective
+  standard errors.
+  Otherwise, the columns contain estimates, standard errors, and
+  joint p-values (JP-vals). When \code{object$type = "diff"}, an
+  additional column contains categorical or pointwise p-values.
+}
 \description{
 Return the output of \code{\link{ca}} function.
 }

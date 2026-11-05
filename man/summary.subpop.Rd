@@ -16,12 +16,29 @@ shows all variables. The summary statistcs include min
 
 \item{...}{additional arguments affecting the summary produced.}
 }
+\value{
+A list with four components:
+\describe{
+  \item{most_affected}{Data for the estimated most affected group.}
+  \item{least_affected}{Data for the estimated least affected group.}
+  \item{stats_most}{A numeric matrix of descriptive statistics for
+    the selected variables in the most affected group.}
+  \item{stats_least}{A numeric matrix of descriptive statistics for
+    the selected variables in the least affected group.}
+}
+}
 \description{
 The \code{\link{subpop}} function stores the most and least affected groups.
 This command allows users to see these two groups and their corresponding
 characteristics. The command also allows users to check the summary
 statistics of variables in interest, which can be useful for plotting the
 projections plot via the \code{\link{plot.subpop}} method.
+}
+\details{
+Each statistics matrix has six rows: minimum, first quartile, median,
+mean, third quartile, and maximum. Columns correspond to \code{vars},
+or all variables when \code{vars = NULL}. The group data retain all
+variables regardless of the selection in \code{vars}.
 }
 \examples{
 data("mortgage")

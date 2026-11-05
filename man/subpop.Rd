@@ -88,7 +88,27 @@ package implements nonparametric bootstrap. The
 alternative is \code{"weighted"}, and the package
 implements weighted bootstrap.}
 }
+\value{
+A list of class \code{"subpop"} with six components:
+\describe{
+  \item{cs_most}{Logical indicators of membership in the confidence set
+    for the most affected group.}
+  \item{cs_least}{Logical indicators of membership in the confidence set
+    for the least affected group.}
+  \item{u}{The fraction defining the most and least affected groups.}
+  \item{subgroup}{The supplied logical subgroup indicators, or
+    \code{NULL} when using the whole sample.}
+  \item{most}{Data for observations in the estimated most affected group.}
+  \item{least}{Data for observations in the estimated least affected group.}
+}
+}
 \description{
+When a subgroup is specified, the confidence-set indicators refer to
+observations within that subgroup; otherwise, they refer to the whole
+sample. The confidence sets account for estimation uncertainty and
+differ from the estimated groups stored in \code{most} and \code{least}.
+}
+\details{
 \code{subpop} conducts set inference on the groups of most and least
 affected. When \code{subgroup = NULL}, output is for whole sample. Otherwise
 the results are subgroup. The output of \code{subpop} is a list

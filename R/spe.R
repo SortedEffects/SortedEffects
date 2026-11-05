@@ -7,10 +7,10 @@
 #' \code{\link{plot.spe}}.
 #'
 #' @return The output is a list with 4 components: (1) \code{spe} stores spe
-#' estimates, the upper and lower confidence bounds, and standard errors;
-#' (2) \code{ape} stores ape estimates, the upper and lower confidence bounds,
-#' and the standard error; (3) \code{us} stores percentile index as in \
-#' code{spe} command; (4) \code{alpha} stores significance level as in
+#' estimates, the upper and lower confidence bounds, and the standard errors;
+#' (2) \code{ape} stores the ape estimates, the upper and lower confidence bounds,
+#' and the standard error; (3) \code{us} stores the percentile index as in
+#' \code{spe} command; (4) \code{alpha} stores the significance level as in
 #' \code{spe} command.
 #'
 #' @param fm          Regression formula.
@@ -175,7 +175,7 @@ spe <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
   if (boot_type == "nonpar") {
     data$.w <- samp_weight
     # print a message showing how many cores are used
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     # set up a progress bar
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = stat_boot_weight,
@@ -185,7 +185,7 @@ spe <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
     closepb(pb)
   } else if (boot_type == "weighted") {
     data$.w <- samp_weight
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = stat_boot_weight,
                         sim = "parametric", ran.gen = data_rg, mle = 0,
@@ -291,6 +291,12 @@ ape <- function(bs, est, alpha) {
 # --Plotting (Output: average effect, sorted effect, correspondent confidence bands) --
 #' Plot output of \code{\link{spe}} command. The x-axis limits are set to the
 #' specified range of percentile index.
+#' 
+#' @return Draws the sorted partial effects with their uniform confidence
+#'   bands, together with the average partial effect and its confidence
+#'   interval. Invisibly returns a list with components \code{rect} and
+#'   \code{text} describing the legend's position and dimensions.
+#' 
 #' @param x           Output of \code{\link{spe}} command.
 #' @param ylim        y-axis limits. Default is NULL.
 #' @param main        Main title of the plot. Defualt is NULL.
@@ -344,7 +350,17 @@ plot.spe <- function(x, ylim = NULL, main = NULL, sub = NULL,
 #' average estimates. For sorted estimates, the table shows user-specified
 #' quantile indices, sorted estimates, standard errors, point-wise confidence
 #' intervals, and uniform confidence intervals. For average estimates, the
-#' table shows average estiamtes, standard errors, and confidence intervals.
+#' table shows average estimates, standard errors, and confidence intervals.
+#'
+#' @return A numeric matrix summarizing the estimated partial effects.
+#'   When \code{result = "sorted"}, each row corresponds to a percentile
+#'   index in \code{object$us}. The six columns contain the sorted partial
+#'   effect estimate, its standard error, pointwise lower and upper
+#'   confidence bounds, and uniform lower and upper confidence bounds.
+#'   When \code{result = "average"}, the matrix has one row and four
+#'   columns containing the average partial effect estimate, its standard
+#'   error, and lower and upper confidence bounds.
+#'   Confidence levels are determined by \code{1 - object$alpha}.
 #'
 #' @param object   The output of \code{\link{spe}} function.
 #' @param result   Whether the user wants to see the sorted or the average

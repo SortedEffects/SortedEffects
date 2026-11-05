@@ -90,7 +90,7 @@ dummy <- function( x, data=NULL, sep="", drop=TRUE, fun=as.integer, verbose = FA
     mm <- stats::model.matrix( ~ x - 1, stats::model.frame( ~ x - 1 ) )
     colnames.mm <- colnames(mm) 
 
-    if( verbose ) cat( " ", name, ":", ncol(mm), "dummy varibles created\n" ) 
+    if( verbose ) message( " ", name, ":", ncol(mm), "dummy varibles created\n" ) 
 
     mm <- matrix( fun(mm), nrow=nrow(mm), ncol=ncol(mm), dimnames=list(NULL, colnames.mm) ) 
 

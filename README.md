@@ -1,9 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Build
-Status](https://travis-ci.org/shuowencs/SortedEffects.svg?branch=master)](https://travis-ci.org/shuowencs/SortedEffects)
-
 # SortedEffects
 
 The R package **SortedEffects** implements econometric methods in

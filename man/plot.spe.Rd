@@ -31,6 +31,12 @@ specified range of percentile index.}
 \item{...}{graphics parameters to be passed to the plotting
 routines.}
 }
+\value{
+Draws the sorted partial effects with their uniform confidence
+  bands, together with the average partial effect and its confidence
+  interval. Invisibly returns a list with components \code{rect} and
+  \code{text} describing the legend's position and dimensions.
+}
 \description{
 Plot output of \code{\link{spe}} command. The x-axis limits are set to the
 specified range of percentile index.

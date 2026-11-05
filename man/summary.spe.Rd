@@ -15,12 +15,23 @@ sorted estimates.}
 
 \item{...}{additional arguments affecting the summary produced.}
 }
+\value{
+A numeric matrix summarizing the estimated partial effects.
+  When \code{result = "sorted"}, each row corresponds to a percentile
+  index in \code{object$us}. The six columns contain the sorted partial
+  effect estimate, its standard error, pointwise lower and upper
+  confidence bounds, and uniform lower and upper confidence bounds.
+  When \code{result = "average"}, the matrix has one row and four
+  columns containing the average partial effect estimate, its standard
+  error, and lower and upper confidence bounds.
+  Confidence levels are determined by \code{1 - object$alpha}.
+}
 \description{
 The option \code{result} allows user to tabulate either sorted estimates or
 average estimates. For sorted estimates, the table shows user-specified
 quantile indices, sorted estimates, standard errors, point-wise confidence
 intervals, and uniform confidence intervals. For average estimates, the
-table shows average estiamtes, standard errors, and confidence intervals.
+table shows average estimates, standard errors, and confidence intervals.
 }
 \examples{
 data("mortgage")

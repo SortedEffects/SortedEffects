@@ -23,6 +23,12 @@
 \item{...}{graphics parameters to be passed to the plotting
 routines.}
 }
+\value{
+Draws the estimated distributions and joint uniform confidence
+  bands for the most and least affected groups.
+  Invisibly returns a list with components \code{rect} and \code{text}
+  describing the legend's position and dimensions.
+}
 \description{
 Plots distributions and joint uniform confidence bands of variables in
 interest from \code{\link{ca}} command.

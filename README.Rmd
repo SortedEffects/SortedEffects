@@ -3,8 +3,6 @@ output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/shuowencs/SortedEffects.svg?branch=master)](https://travis-ci.org/shuowencs/SortedEffects)
-
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,

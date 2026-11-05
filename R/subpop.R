@@ -1,4 +1,9 @@
 #' Inference on Most and Least Affected Groups
+#' 
+#' When a subgroup is specified, the confidence-set indicators refer to
+#' observations within that subgroup; otherwise, they refer to the whole
+#' sample. The confidence sets account for estimation uncertainty and
+#' differ from the estimated groups stored in \code{most} and \code{least}.
 #'
 #' \code{subpop} conducts set inference on the groups of most and least
 #' affected. When \code{subgroup = NULL}, output is for whole sample. Otherwise
@@ -13,6 +18,19 @@
 #' \code{\link{plot.subpop}} command while the two groups can be tabulated via
 #' the \code{\link{summary.subpop}} command.
 #'
+#' @return A list of class \code{"subpop"} with six components:
+#' \describe{
+#'   \item{cs_most}{Logical indicators of membership in the confidence set
+#'     for the most affected group.}
+#'   \item{cs_least}{Logical indicators of membership in the confidence set
+#'     for the least affected group.}
+#'   \item{u}{The fraction defining the most and least affected groups.}
+#'   \item{subgroup}{The supplied logical subgroup indicators, or
+#'     \code{NULL} when using the whole sample.}
+#'   \item{most}{Data for observations in the estimated most affected group.}
+#'   \item{least}{Data for observations in the estimated least affected group.}
+#' }
+#' 
 #' @param fm          Regression formula
 #' @param data        The data in use
 #' @param method      Models to be used for estimating partial effects. Four
@@ -206,7 +224,7 @@ subpop <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
   if (parallel == FALSE) ncores <- 1
   if (boot_type == "nonpar") {
     data$.w <- samp_weight
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = boot_stat_weight,
                         sim = "parametric", ran.gen = data_non, mle = 0,
@@ -215,7 +233,7 @@ subpop <- function(fm, data, method = c("ols", "logit", "probit", "QR"),
     data$.w <- NULL
   } else if (boot_type == "weighted") {
     data$.w <- samp_weight
-    cat(paste("Using", ncores, "CPUs now.\n"))
+    message(paste("Using", ncores, "CPUs now.\n"))
     pb <- startpb(min = 0, max = b)
     result_boot <- boot(data = data, statistic = boot_stat_weight,
                         sim = "parametric", ran.gen = data_rg, mle = 0,
@@ -295,6 +313,21 @@ subleast <- function(est_pe, bs_pe, bs_u, est_u, alpha, b) {
 #' statistics of variables in interest, which can be useful for plotting the
 #' projections plot via the \code{\link{plot.subpop}} method.
 #'
+#' Each statistics matrix has six rows: minimum, first quartile, median,
+#' mean, third quartile, and maximum. Columns correspond to \code{vars},
+#' or all variables when \code{vars = NULL}. The group data retain all
+#' variables regardless of the selection in \code{vars}.
+#'
+#' @return A list with four components:
+#' \describe{
+#'   \item{most_affected}{Data for the estimated most affected group.}
+#'   \item{least_affected}{Data for the estimated least affected group.}
+#'   \item{stats_most}{A numeric matrix of descriptive statistics for
+#'     the selected variables in the most affected group.}
+#'   \item{stats_least}{A numeric matrix of descriptive statistics for
+#'     the selected variables in the least affected group.}
+#' }
+#' 
 #' @param object    Output of \code{\link{subpop}} command.
 #' @param vars      The variables that users want to see the summary
 #'                  statistics. The default is \code{NULL} and the command
@@ -354,6 +387,11 @@ summary.subpop <- function(object, vars = NULL, ...) {
 #' y-axis is set to be the factor level. Otherwise, users can use
 #' \code{\link{summary.subpop}} to know the ranges of variables in the
 #' two groups.
+#' 
+#' @return Draws a two-dimensional projection of the confidence sets for
+#'   the most and least affected groups using the specified variables.
+#'   Invisibly returns a list with components \code{rect} and \code{text}
+#'   describing the legend's position and dimensions.
 #'
 #' @param x           Output of \code{\link{subpop}} command.
 #' @param varx        The name of the variable to be plotted on the x-axis.
